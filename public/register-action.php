@@ -1,0 +1,12 @@
+<?php
+session_start();
+include('../config/db.php');
+include('../public/functions.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        register($_POST['username'], $_POST['password']);
+        header('Location: index.php');
+        exit;
+    }
+}
