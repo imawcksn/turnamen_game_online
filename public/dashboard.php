@@ -1,14 +1,12 @@
-
 <?php
-session_start();
 include('../includes/header.php');
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit();
 }
 
-echo "<h1>Welcome, " . $_SESSION['username'] . "</h1>";
+echo "<h1>Welcome, " . $_SESSION['user']['username'] . "</h1>";
 ?>
 
 
