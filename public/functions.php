@@ -62,11 +62,18 @@ function create_tournament($name, $description, $schedule, $livestream)
     return $conn->query($sql);
 }
 
+function getTournamentCategories()
+{
+    global $conn;
+    return $conn->query("SELECT * FROM tournament_categories");
+}
+
 function getTournaments()
 {
     global $conn;
     return $conn->query("SELECT * FROM tournaments");
 }
+
 
 function getTournamentById($id)
 {
