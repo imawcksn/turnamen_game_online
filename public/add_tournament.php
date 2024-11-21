@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('../includes/header.php');
 include('../public/functions.php');
 
 if ($_SESSION['user']['role'] !== 'admin') {
@@ -13,8 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit;
 }
 
-include('../includes/header.php');
+
 ?>
+<div class="container">
 <div class="wrapper mt-5">
     <form method="post">
         <input type="text" name="name" placeholder="Nama Turnamen" required>
@@ -23,4 +24,5 @@ include('../includes/header.php');
         <input type="text" name="livestream" placeholder="Livestreaming URL">
         <button type="submit">Simpan</button>
     </form>
+</div>
 </div>
