@@ -68,6 +68,12 @@ function getTournamentCategories()
     return $conn->query("SELECT * FROM tournament_categories");
 }
 
+function getTournamentCategoryById($id)
+{
+    global $conn;
+    return $conn->query("SELECT * FROM tournament_categories WHERE id = $id")->fetch_assoc();
+}
+
 function getTournaments()
 {
     global $conn;
