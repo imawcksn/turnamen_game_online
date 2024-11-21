@@ -80,7 +80,6 @@ function getTournaments()
     return $conn->query("SELECT * FROM tournaments");
 }
 
-
 function getTournamentById($id)
 {
     global $conn;
@@ -102,4 +101,10 @@ function deleteTournament($id)
 
     $sql = "DELETE FROM tournaments WHERE id=$id";
     return $conn->query($sql);
+}
+
+function getDataFromTable($table) {
+    global $conn;
+    $query = "SELECT * FROM $table";
+    return $conn->query($query);
 }
