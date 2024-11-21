@@ -113,6 +113,7 @@
 
         // Loop thru tournaments, make card for each data tur
         foreach ($tournaments as $tournament) {
+            $category = getTournamentCategoryById($tournament['category_id']);
             echo '
             <div class="card">
                 <img src="' . htmlspecialchars($tournament['front_image']) . '" alt="' . htmlspecialchars($tournament['name']) . '">
@@ -120,7 +121,7 @@
                     <h5 class="card-title">' . htmlspecialchars($tournament['name']) . '</h5>
                     <p class="card-text">
                         ' . htmlspecialchars($tournament['schedule']) . '<br>
-                        ' . htmlspecialchars($tournament['schedule']) . '<br>
+                        ' . htmlspecialchars($category['name']) . '<br>
                         ' . htmlspecialchars($tournament['schedule']) . '
                     </p>
                     <a href="tournament-detail.php?id=' . $tournament['id'] . '" class="btn btn-primary">Lihat Detail</a>
