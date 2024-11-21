@@ -6,110 +6,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Game Tournament</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet"> 
+    <link href="assets/css/style.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
             font-family: 'Arial', sans-serif;
         }
-        .navbar {
+
+        .sidebar {
+            text-decoration: none;
+                transition: text-shadow 0.3s ease; 
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
             background-color: #343a40;
-        }
-        .navbar a {
-            font-weight: bold;
-        }
-        .navbar-nav .nav-item .nav-link:hover {
-            background-color: #495057;
+            padding-top: 20px;
             color: #fff;
         }
-        .modal-content {
-            border-radius: 15px;
+
+        .sidebar a {
+            padding: 10px 15px;
+            display: block;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
         }
-        .form-label {
-            font-weight: 500;
+
+    
+        /* Glow effect on hover */
+        .sidebar a:hover {
+            background-color: #495057;
+            text-shadow: 0 0 8px rgba(255, 255, 0, 0.8), 0 0 15px rgba(255, 255, 0, 0.8), 0 0 20px rgba(255, 255, 0, 1);
+            color: #e1b308;
         }
-        .form-control {
-            border-radius: 10px;
-            box-shadow: none;
-            transition: all 0.3s ease;
+
+        /* Glow effect when selected (active) */
+        .sidebar a:active {
+            text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
+            color: #e1b308;
         }
-        .form-control:focus {
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            border-color: #007bff;
+
+        .sidebar a.selected {
+            text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
+            color: #e1b308; /* Highlight selected link in yellow */
         }
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            border-radius: 10px;
-            padding: 10px;
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
         }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
+
+        .sidebar-toggler {
+            display: none;
         }
-        .modal-header {
-            border-bottom: none;
-        }
-        .modal-footer {
-            border-top: none;
-        }
-        .nav-tabs .nav-link.active {
-            background-color: #007bff;
-            color: white;
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 0;
+                overflow: hidden;
+            }
+
+            .sidebar a {
+                text-align: center;
+            }
+
+            .sidebar-toggler {
+                display: block;
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                z-index: 1000;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar.active {
+                width: 250px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <?php
-    session_start(); // Ensure session is started
-    ?>
+    <?php session_start(); ?>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">Online Game Tournament</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.php">Home</a>
-                    </li>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <img src="/images/OGT.svg" alt="Home" width="36" height="36">
+        
+        <a href="index.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/index.php') ? 'selected' : ''; ?>">Home</a>
+        
+        <?php if (isset($_SESSION['user'])): ?>
+            <?php if ($_SESSION['user']['role'] == 'admin'): ?>
+                <a href="admin-dashboard.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/admin-dashboard.php') ? 'selected' : ''; ?>">Admin Dashboard</a>
+                <a href="profile.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/profile.php') ? 'selected' : ''; ?>">Profile</a>
+                <a href="logout.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/logout.php') ? 'selected' : ''; ?>">Logout</a>
+            <?php elseif ($_SESSION['user']['role'] == 'user'): ?>
+                <a href="profile.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/profile.php') ? 'selected' : ''; ?>">Profile</a>
+                <a href="logout.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/logout.php') ? 'selected' : ''; ?>">Logout</a>
+            <?php endif; ?>
+        <?php else: ?>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#authModal" class="<?php echo ($_SERVER['PHP_SELF'] == '/login.php') ? 'selected' : ''; ?>">Login/Register</a>
+        <?php endif; ?>
+    </div>
 
-                    <?php if (isset($_SESSION['user'])): ?>
-                        <!-- If the user is logged in -->
-                        <?php if ($_SESSION['user']['role'] == 'admin'): ?>
-                            <!-- If the user is an admin -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="admin-dashboard.php">Admin Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="profile.php">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="logout.php">Logout</a>
-                            </li>
-                        <?php elseif ($_SESSION['user']['role'] == 'user'): ?>
-                            <!-- If the user is a regular user -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="profile.php">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="logout.php">Logout</a>
-                            </li>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <!-- If the user is not logged in -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.php" data-bs-toggle="modal" data-bs-target="#authModal">Login/Register</a>
-                        </li>
-                    <?php endif; ?>
+    <!-- Sidebar Toggler -->
+    <button class="sidebar-toggler" onclick="toggleSidebar()">☰</button>
 
-                </ul>
-            </div>
+    <!-- Main Content -->
+    <?php if (($_SERVER['PHP_SELF'] == '/index.php')): ?>
+        <div class="main-content">
+            <h1>Welcome to Online Game Tournament, <?php echo $_SESSION['user']['username']; ?>!</h1>
+            <p>Enjoy your killing spree</p>
         </div>
-    </nav>
+    <?php endif; ?>
+
+
 
     <!-- Modal for Login / Register -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
@@ -169,6 +190,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
