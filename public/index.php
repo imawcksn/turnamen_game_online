@@ -1,46 +1,136 @@
-
 <?php include('../includes/header.php'); ?>
+<?php include('functions.php'); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGT Tournaments</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #333;
+            color: #f1c40f; 
+        }
 
-<div class="container">
-    <h1 class="my-4 text-center">OGT</h1>
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
 
-    <div class="row">
+        .categories-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            margin-bottom: 20px;
+            padding: 10px 0;
+        }
 
-        <div class="col-md-4">
-            <div class="card">
-                <img src="https://via.placeholder.com/350x150" class="card-img-top" alt="Turnamen 1">
-                <div class="card-body">
-                    <h5 class="card-title">IGX2024</h5>
-                    <p class="card-text">12-15 November 2024<br>19:00 WIB-22:00 WIB<br>WTC Surabaya</p>
-                    <a href="tournament-detail.php" class="btn btn-primary">Lihat Detail</a>
-                </div>
-            </div>
+        .category-item {
+            display: inline-block;
+            background-color: #444;
+            color: #f1c40f; 
+            padding: 10px 15px;
+            margin-right: 10px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .category-item:hover {
+            background-color: #f1c40f;
+            color: #333;
+        }
+
+        .card {
+            background-color: #444; 
+            border: none;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .card img {
+            width: 300px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .card-body {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .card-title {
+            color: #f1c40f; 
+            font-size: 1.5rem;
+        }
+
+        .card-text {
+            color: #fff; 
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #f1c40f;
+            border: none;
+            color: #333;
+        }
+
+        .btn-primary:hover {
+            background-color: #e1b308;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">OGT Tournaments</h1>
+
+        <!-- Categories -->
+        <?php
+        $categories = getTournamentCategories();
+        ?>
+        <div class="categories-container">
+            <?php
+            foreach ($categories as $category) {
+                echo '
+                <div class="category-item">' . htmlspecialchars($category['name']) . '</div>
+                ';
+            }
+            ?>
         </div>
 
+        <!-- Tournament Cards -->
+        <?php
+        $tournaments = getTournaments(); // Get tournaments from database
 
-        <div class="col-md-4">
+        // Loop thru tournaments, make card for each data tur
+        foreach ($tournaments as $tournament) {
+            echo '
             <div class="card">
-                <img src="https://via.placeholder.com/350x150" class="card-img-top" alt="Turnamen 2">
+                <img src="' . htmlspecialchars($tournament['front_image']) . '" alt="' . htmlspecialchars($tournament['name']) . '">
                 <div class="card-body">
-                    <h5 class="card-title">IGX2025</h5>
-                    <p class="card-text">12-15 November 2025<br>19:00 WIB-22:00 WIB<br>WTC Surabaya</p>
-                    <a href="tournament-detail.php" class="btn btn-primary">Lihat Detail</a>
+                    <h5 class="card-title">' . htmlspecialchars($tournament['name']) . '</h5>
+                    <p class="card-text">
+                        ' . htmlspecialchars($tournament['schedule']) . '<br>
+                        ' . htmlspecialchars($tournament['schedule']) . '<br>
+                        ' . htmlspecialchars($tournament['schedule']) . '
+                    </p>
+                    <a href="tournament-detail.php?id=' . $tournament['id'] . '" class="btn btn-primary">Lihat Detail</a>
                 </div>
-            </div>
-        </div>
+            </div>';
+        }
+        ?>
 
-
-        <div class="col-md-4">
-            <div class="card">
-                <img src="https://via.placeholder.com/350x150" class="card-img-top" alt="Turnamen 3">
-                <div class="card-body">
-                    <h5 class="card-title">PMGC 2024</h5>
-                    <p class="card-text">12-15 November 2025<br>19:00 WIB-22:00 WIB<br>Politeknik Elektronika Negeri Surabaya</p>
-                    <a href="tournament-detail.php" class="btn btn-primary">Lihat Detail</a>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
+</body>
+</html>
 
 <?php include('../includes/footer.php'); ?>
