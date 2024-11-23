@@ -123,9 +123,9 @@
     <button class="sidebar-toggler" onclick="toggleSidebar()">☰</button>
 
     <!-- Main Content -->
-    <?php if (($_SERVER['PHP_SELF'] == '/index.php')): ?>
+    <?php if (($_SERVER['PHP_SELF'] == '/index.php') && (isset($_SESSION['user']['username']))): ?>
         <div class="main-content">
-            <h1>Welcome to Online Game Tournament, <?php echo $_SESSION['user']['username']; ?>!</h1>
+            <h1>Welcome to Online Game Tournament, <?php  echo $_SESSION['user']['username']; ?>!</h1>
             <p>Enjoy your killing spree</p>
         </div>
     <?php endif; ?>
