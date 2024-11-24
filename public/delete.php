@@ -2,8 +2,6 @@
 session_start();
 include('../public/functions.php');
 
-
-// Check user role
 if ($_SESSION['user']['role'] !== 'admin') {
     header('Location: index.php');
     exit;
@@ -17,14 +15,14 @@ if (!isset($_GET['table']) || !isset($_GET['id'])) {
 $table = htmlspecialchars($_GET['table']);
 $id = intval($_GET['id']);
 
-// Attempt to delete the record
+// coba delete record
 $result = deleteRecord($table, $id);
 
 if ($result === true) {
     header("Location: admin-dashboard.php?table=$table&message=Record deleted successfully");
     exit;
 } else {
-    // Display the error message
+    // display error message
     echo "<div class='alert alert-danger'>Failed to delete record: $result</div>";
 }
 ?>
