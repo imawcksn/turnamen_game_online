@@ -105,8 +105,8 @@ if (!$tournamentDetails) {
                          class="img-fluid card-img-top">
                     <div class="card-body">
                         <h2 class="card-title"><?php echo htmlspecialchars($tournamentDetails['name']); ?></h2>
-                        <p><strong>Pendaftaran dibuka:</strong> <?php echo htmlspecialchars($tournamentDetails['start_date']); ?></p>
-                        <p><strong>Pendaftaran ditutup:</strong> <?php echo htmlspecialchars($tournamentDetails['end_date']); ?></p>
+                        <p><strong>Pendaftaran dibuka:</strong> <?php echo htmlspecialchars(date('Y/m/d', strtotime($tournamentDetails['start_date']))); ?></p>
+                        <p><strong>Pendaftaran ditutup:</strong> <?php echo htmlspecialchars(date('Y/m/d', strtotime($tournamentDetails['end_date']))); ?></p>
                         <p><strong>Kategori:</strong> <?php echo htmlspecialchars($category['name'] ?? 'Tidak ada kategori'); ?></p>
                         <p><strong>Contact Person:</strong> <?php echo htmlspecialchars($tournamentDetails['contact_person']); ?></p>
                         <p><strong>Livestream URL:</strong> <?php echo htmlspecialchars($tournamentDetails['livestream']); ?></p>
