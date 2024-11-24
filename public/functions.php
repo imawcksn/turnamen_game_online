@@ -53,7 +53,7 @@ function logout() {
     // Destroy the session
     session_destroy();
     
-    header('Location: index.php');
+    header('Location: home.php');
     exit();
 }
 

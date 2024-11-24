@@ -13,12 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($_SESSION['user']['role'] === 'admin') {
             header('Location: admin-dashboard.php');
         } else {
-            header('Location: index.php');
+            header('Location: home.php');
         }
         exit;
     } else {
         // Jika login gagal, kembali ke halaman login dengan pesan error
-        header('Location: index.php');
+        header('Location: home.php');
         exit;
     }
 }

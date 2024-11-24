@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($register == true) {
             login($_POST['username'], $_POST['password']);
         }
-        header('Location: index.php');
+        header('Location: home.php');
         exit;
     }
 }

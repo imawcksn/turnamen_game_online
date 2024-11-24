@@ -120,7 +120,7 @@
             <img src="../images/OGT.svg" alt="Home" width="75" height="75">
         </div>
         
-        <a href="index.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/index.php') ? 'selected' : ''; ?>">Home</a>
+        <a href="home.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/home.php') ? 'selected' : ''; ?>">Home</a>
         <?php if (isset($_SESSION['user'])): ?>
             <?php if ($_SESSION['user']['role'] == 'admin'): ?>
                 <a href="admin-dashboard.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/admin-dashboard.php') ? 'selected' : ''; ?>">Admin Dashboard</a>

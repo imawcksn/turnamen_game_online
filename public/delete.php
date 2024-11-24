@@ -3,7 +3,7 @@ session_start();
 include('../public/functions.php');
 
 if ($_SESSION['user']['role'] !== 'admin') {
-    header('Location: index.php');
+    header('Location: home.php');
     exit;
 }   
 

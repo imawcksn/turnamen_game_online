@@ -3,7 +3,7 @@ include('../includes/header.php');
 include('functions.php');
 
 if ($_SESSION['user']['role'] !== 'admin') {
-    header('Location: index.php');
+    header('Location: home.php');
     exit;
 }
 // ambil variabel dari url, misal table?=
