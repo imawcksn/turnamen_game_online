@@ -111,7 +111,7 @@
 ; ?>
     <div class="sidebar" id="sidebar">
         <div class="logo-container">
-            <img src="/images/OGT.svg" alt="Home" width="36" height="36">
+            <img src="../images/OGT.svg" alt="Home" width="36" height="36">
         </div>
         
         <a href="index.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/index.php') ? 'selected' : ''; ?>">Home</a>
