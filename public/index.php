@@ -51,11 +51,10 @@ body {
     font-weight: bold;
 }
 
-/* Banner styling */
 .banner {
     width: 100%; 
     max-width: 800px; 
-    max-height: 300px; /* Maximum height for the banner */
+    max-height: 300px; 
     overflow: hidden;
     position: relative;
 }
@@ -64,10 +63,8 @@ body {
     width: 100%;
     height: 100%; 
     object-fit: cover; 
-    object-position: center; 
+    object-position: center center; 
 }
-
-
 
 .card {
     max-width: 800px; 
@@ -188,7 +185,7 @@ a.btn.disabled {
     <div class="main-content">
         <h1 class="text-left mb-4">Tournaments</h1>
         <div class="banner">
-        <img src="../images/banner.jpg" alt="' . htmlspecialchars($tournament['name']) . '" width="100%" height="300">
+        <img src="../images/banner2.jpg" alt="' . htmlspecialchars($tournament['name']) . '" width="100%" height="300">
         </div>
 
         <?php
@@ -220,8 +217,8 @@ a.btn.disabled {
                         <p class="card-text">
                             ' . htmlspecialchars('Prize Pool: ' . 'Rp. ' . number_format($tournament['prize'], 2, ',', '.')) . '<br>
                             ' . htmlspecialchars('Harga Pendaftaran: ' . ($tournament['price'] == 0 ? 'Gratis' : 'Rp. ' . number_format($tournament['price'], 2, ',', '.'))) . '<br>
-                            ' . htmlspecialchars('Pendaftaran dimulai: ' . $tournament['start_date']) . '<br>
-                            ' . htmlspecialchars('Pendaftaran ditutup: ' . $tournament['end_date']) . '<br>
+                            ' . htmlspecialchars('Pendaftaran dimulai: ' . date('Y/m/d', strtotime($tournament['start_date']))) . '<br>
+                            ' . htmlspecialchars('Pendaftaran ditutup: ' . date('Y/m/d', strtotime($tournament['end_date']))) . '<br>
                             ' . htmlspecialchars('Max Slot: ' . $tournament['max_slot']) .   '<br>
                             ' . htmlspecialchars('Game: ' . $category['name'] ?? 'None') . '
                         </p>
