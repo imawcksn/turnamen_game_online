@@ -185,7 +185,9 @@ a.btn.disabled {
     <div class="main-content">
         <h1 class="text-left mb-4">Tournaments</h1>
         <div class="banner">
-        <img src="../images/banner2.jpg" alt="' . htmlspecialchars($tournament['name']) . '" width="100%" height="300">
+            <a href="https://valorantesports.com/id-ID/news/valorant-game-changers-championship-2024-everything-you-need-to-know">
+                <img src="../images/banner2.jpg" alt="' . htmlspecialchars($tournament['name']) . '" width="100%" height="300">
+            </a>
         </div>
 
         <?php
