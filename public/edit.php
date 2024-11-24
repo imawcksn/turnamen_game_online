@@ -29,26 +29,25 @@ if (!$record) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
     $uploadedFilePath = null;
-    $errors = [];
-
-    // handle front image
+    
     if (isset($_FILES['front_image']) && $_FILES['front_image']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['front_image']['tmp_name'];
         $fileName = uniqid() . '_' . basename($_FILES['front_image']['name']);
         $fileSize = $_FILES['front_image']['size'];
-        $allowedTypes = ['image/jpeg', 'image/png'];
     
-        $uploadDir = 'uploads/';
-        $uploadPath = $_SERVER['DOCUMENT_ROOT'] . '/../' . $uploadDir;
-        $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/" . $uploadDir;
+        $uploadDir = '/uploads/';
+        $uploadPath = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $uploadDir;
+        $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$uploadDir";
     
-        if ($fileSize > 2 * 1024 * 1024) { // Limit size to 2MB
+        if ($fileSize > 2 * 1024 * 1024) {
             $errors[] = "File size for front image exceeds 2MB.";
         } else {
             if (!is_dir($uploadPath)) {
                 mkdir($uploadPath, 0777, true);
             }
+    
             $uploadedFilePath = $uploadPath . $fileName;
+    
             if (!move_uploaded_file($fileTmpPath, $uploadedFilePath)) {
                 $errors[] = "Failed to upload front image.";
             } else {
@@ -57,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     
-
     // If no errors, update the record
     if (empty($errors)) {
         updateRecord($currentTable, $recordId, $data);

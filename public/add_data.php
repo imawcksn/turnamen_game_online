@@ -51,35 +51,33 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
     $uploadedFilePath = null;
-
+    
     if (isset($_FILES['front_image']) && $_FILES['front_image']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['front_image']['tmp_name'];
         $fileName = uniqid() . '_' . basename($_FILES['front_image']['name']);
         $fileSize = $_FILES['front_image']['size'];
-        $allowedTypes = ['image/jpeg', 'image/png'];
     
-        $uploadDir = '/uploads/'; 
-        $uploadPath = $_SERVER['DOCUMENT_ROOT'] . $uploadDir; 
+        $uploadDir = '/uploads/';
+        $uploadPath = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . $uploadDir;
+        $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$uploadDir";
     
-
-        $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/uploads/";
-    
-        if ($fileSize > 2 * 1024 * 1024) { 
+        if ($fileSize > 2 * 1024 * 1024) {
             $errors[] = "File size for front image exceeds 2MB.";
         } else {
             if (!is_dir($uploadPath)) {
-                mkdir($uploadPath, 0777, true); 
+                mkdir($uploadPath, 0777, true);
             }
+    
             $uploadedFilePath = $uploadPath . $fileName;
+    
             if (!move_uploaded_file($fileTmpPath, $uploadedFilePath)) {
                 $errors[] = "Failed to upload front image.";
             } else {
-               
                 $data['front_image'] = $baseURL . $fileName;
             }
         }
     }
-
+    
     foreach ($tableFields as $field => $label) {
         if ($field !== 'front_image' && (!isset($data[$field]) || trim($data[$field]) === '')) {
             $errors[] = "Field '$label' is required.";
