@@ -32,7 +32,7 @@
         }
             .hero {
         position: relative;
-        background-image: url('https://www.dexerto.com/cdn-image/wp-content/uploads/2024/07/22/53946218718_8cb287dc71_k-1.jpg'); /* Your background image */
+        background-image: url('https://www.dexerto.com/cdn-image/wp-content/uploads/2024/07/22/53946218718_8cb287dc71_k-1.jpg');
         background-size: cover;
         background-position: center;
         height: 100vh;
@@ -53,15 +53,17 @@
         background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black overlay */
         z-index: 1;
     }
-
+    .hero img {
+        min-height: 100px;
+        width: auto;
+        height: 150px; 
+    }
     .hero div {
         position: relative;
         z-index: 2;
     }
-
-
         .hero h1 {
-            font-size: 3rem;
+            font-size: 1.5rem;
             font-weight: bold;
         }
         .hero p {
@@ -97,7 +99,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div>
-            <img src="../images/OGT.svg" alt="" width="300" height="300">
+            <img src="../images/ogtt.svg" alt="" class="mb-3">
             <p>Your journey to success begins here.</p>
             <a href="index.php" class="btn btn-primary">Get Started</a>
             </div>
