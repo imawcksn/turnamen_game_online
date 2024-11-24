@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // validasi dan process apabila ada field yang belum di isi
     foreach ($tableFields as $field => $label) {
         // skip front image karena nullable
-        if ($field !== 'front_image' && $field !== 'livestream' (!isset($data[$field]) || trim($data[$field]) === '')) {
+        if ($field !== 'front_image' && (!isset($data[$field]) || trim($data[$field]) === '')) {
             $errors[] = "Field '$label' is required.";
         }
     }
