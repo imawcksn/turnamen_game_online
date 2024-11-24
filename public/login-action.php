@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         // Jika login gagal, kembali ke halaman login dengan pesan error
-        header('Location: login.php');
+        header('Location: index.php');
         exit;
     }
 }
