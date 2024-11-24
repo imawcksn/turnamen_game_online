@@ -219,8 +219,11 @@ a.btn.disabled {
                         <p class="card-text">
                             ' . htmlspecialchars('Prize Pool: ' . 'Rp. ' . number_format($tournament['prize'], 2, ',', '.')) . '<br>
                             ' . htmlspecialchars('Harga Pendaftaran: ' . ($tournament['price'] == 0 ? 'Gratis' : 'Rp. ' . number_format($tournament['price'], 2, ',', '.'))) . '<br>
-                            ' . htmlspecialchars('Pendaftaran dimulai: ' . date('Y/m/d', strtotime($tournament['start_date']))) . '<br>
-                            ' . htmlspecialchars('Pendaftaran ditutup: ' . date('Y/m/d', strtotime($tournament['end_date']))) . '<br>
+                            ' . htmlspecialchars('Periode pendaftaran: ' . date('Y/m/d', strtotime($tournament['start_date'])) .' - ' . date('Y/m/d', strtotime($tournament['end_date']))) .  '<br>
+                            <br>
+                            ' . htmlspecialchars('Tournament Day Start: ' . date('Y/m/d H:i', strtotime($tournament['match_start']))) . '<br> 
+                            ' . htmlspecialchars('Tournament Ends: ' . date('Y/m/d H:i', strtotime($tournament['match_end']))) . '<br> 
+                            <br>                                    
                             ' . htmlspecialchars('Max Slot: ' . $tournament['max_slot']) .   '<br>
                             ' . htmlspecialchars('Game: ' . $category['name'] ?? 'None') . '
                         </p>

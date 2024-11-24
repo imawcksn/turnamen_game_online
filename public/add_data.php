@@ -25,6 +25,8 @@ $fields = [
         'form_link' => 'Google Form URL',
         'start_date' => 'Start Date (YYYY-MM-DD)',
         'end_date' => 'End Date (YYYY-MM-DD)',
+        'match_start' => 'Match Start Date (YYYY-MM-DD)',
+        'match_end' => 'Match End Date (YYYY-MM-DD)',
     ],
     'users' => [
         'username' => 'Username',
@@ -209,7 +211,7 @@ ob_flush();
                     <input type="file" class="form-control" id="<?= $field ?>" name="<?= $field ?>" accept="image/*">
                 <?php else: ?>
                     <input 
-                        type="<?= in_array($field, ['price', 'max_slot', 'prize']) ? 'number' : ($field === 'start_date' || $field === 'end_date' ? 'date' : 'text') ?>" 
+                    type="<?= in_array($field, ['price', 'max_slot', 'prize']) ? 'number' : (in_array($field, ['start_date', 'end_date']) ? 'date' : (in_array($field, ['match_start', 'match_end']) ? 'datetime-local' : 'text')) ?>"
                         class="form-control" 
                         id="<?= $field ?>" 
                         name="<?= $field ?>" 

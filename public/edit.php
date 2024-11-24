@@ -130,16 +130,16 @@ ob_flush();
                         name="<?= $field ?>" 
                         class="form-control" 
                         rows="4"><?= htmlspecialchars($value) ?></textarea>
-                <?php else: ?>
-                    <input 
-                        type="text" 
-                        id="<?= $field ?>" 
-                        name="<?= $field ?>" 
-                        class="form-control" 
-                        value="<?= htmlspecialchars($value) ?>" 
-                        <?= $field === 'id' ? 'readonly' : '' ?>
-                    >
-                <?php endif; ?>
+                        <?php else: ?>
+                        <input 
+                            type="<?= in_array($field, ['start_date', 'end_date']) ? 'date' : (in_array($field, ['match_start', 'match_end']) ? 'datetime-local' : 'text') ?>" 
+                            id="<?= $field ?>" 
+                            name="<?= $field ?>" 
+                            class="form-control" 
+                            value="<?= htmlspecialchars(in_array($field, ['match_start', 'match_end']) ? date('Y-m-d\TH:i', strtotime($value)) : (in_array($field, ['start_date', 'end_date']) ? date('Y-m-d', strtotime($value)) : $value)) ?>" 
+                            <?= $field === 'id' ? 'readonly' : '' ?>
+                        >
+                    <?php endif; ?>
             </div>
         <?php endforeach; ?>
         <button type="submit" class="btn btn-primary">Update</button>
