@@ -31,17 +31,25 @@
 
 .sidebar a:hover {
     background-color: #495057;
-    text-shadow: 0 0 8px rgba(255, 255, 0, 0.8), 0 0 15px rgba(255, 255, 0, 0.8), 0 0 20px rgba(255, 255, 0, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1)
+    , 0 0 18px rgba(255, 255, 255, 1)
+, 0 0 25px rgba(255, 255, 255, 1);
     color: #029afe;
 }
 
 .sidebar a:active {
-    text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1)
+    , 0 0 18px rgba(255, 255, 255, 1)
+, 0 0 25px rgba(255, 255, 255, 1);
+
     color: #029afe;
 }
 
 .sidebar a.selected {
-    text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1)
+    , 0 0 18px rgba(255, 255, 255, 1)
+, 0 0 25px rgba(255, 255, 255, 1);
+
     color: #029afe;
 }
 
@@ -57,7 +65,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px; 
 }
 @media (max-width: 768px) {
 
@@ -98,7 +105,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px; 
 }
 }
     </style>
@@ -111,7 +117,7 @@
 ; ?>
     <div class="sidebar" id="sidebar">
         <div class="logo-container">
-            <img src="../images/OGT.svg" alt="Home" width="36" height="36">
+            <img src="../images/OGT.svg" alt="Home" width="75" height="75">
         </div>
         
         <a href="index.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/index.php') ? 'selected' : ''; ?>">Home</a>
