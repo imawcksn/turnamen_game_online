@@ -97,7 +97,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div>
-            <h1>Online Game Tournament</h1>
+            <img src="../images/OGT.svg" alt="" width="300" height="300">
             <p>Your journey to success begins here.</p>
             <a href="index.php" class="btn btn-primary">Get Started</a>
             </div>
@@ -112,5 +112,5 @@
 
 <?php
 // Include the footer file
-include('includes/footer.php');
+
 ?>
