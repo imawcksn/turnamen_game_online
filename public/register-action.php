@@ -5,7 +5,10 @@ include('../public/functions.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        register($_POST['username'], $_POST['password']);
+        $register = register($_POST['username'], $_POST['password'], $_POST['email']);
+        if ($register == true) {
+            login($_POST['username'], $_POST['password']);
+        }
         header('Location: index.php');
         exit;
     }
