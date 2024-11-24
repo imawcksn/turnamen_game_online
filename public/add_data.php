@@ -50,30 +50,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
     $uploadedFilePath = null;
 
-    if (isset($_FILES['front_image'])) {
+    if (isset($_FILES['front_image']) && $_FILES['front_image']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['front_image']['tmp_name'];
         $fileName = uniqid() . '_' . basename($_FILES['front_image']['name']);
         $fileSize = $_FILES['front_image']['size'];
         $fileType = mime_content_type($fileTmpPath);
         $allowedTypes = ['image/jpeg', 'image/png'];
-        $uploadDir = '../uploads/';
-        $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-    
+        
+        // Adjust the upload directory path to include the correct base folder
+        $uploadDir = 'uploads/'; // relative path from the script
+        $uploadPath = $_SERVER['DOCUMENT_ROOT'] . '/turnamen-game-online/' . $uploadDir; // full path
+
+        $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/turnamen-game-online";
+
+        // Validate file type and size
         if (!in_array($fileType, $allowedTypes)) {
             $errors[] = "Invalid file type for front image. Only JPG and PNG are allowed.";
-        } elseif ($fileSize > 2 * 1024 * 1024) {
+        } elseif ($fileSize > 2 * 1024 * 1024) { // Limit size to 2MB
             $errors[] = "File size for front image exceeds 2MB.";
         } else {
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
             }
-
-            $uploadedFilePath = $uploadDir . $fileName;
-
+            $uploadedFilePath = $uploadPath . $fileName;
             if (!move_uploaded_file($fileTmpPath, $uploadedFilePath)) {
                 $errors[] = "Failed to upload front image.";
             } else {
-                $data['front_image'] = $baseURL . '/uploads/' . $fileName;
+                // Set the correct URL for the uploaded image
+                $data['front_image'] = $baseURL . '/' . $uploadDir . $fileName;
             }
         }
     }

@@ -210,8 +210,8 @@
                     <div class="card-body">
                         <h5 class="card-title">' . htmlspecialchars($tournament['name']) . '</h5>
                         <p class="card-text">
-                            ' . htmlspecialchars('Prize Pool: ' . $tournament['prize']) . '<br>
-                            ' . htmlspecialchars('Harga Pendaftaran: ' . ($tournament['price'] == 0 ? 'Gratis' : $tournament['price'])) . '<br>
+                            ' . htmlspecialchars('Prize Pool: ' . 'Rp. ' . number_format($tournament['prize'], 2, ',', '.')) . '<br>
+                            ' . htmlspecialchars('Harga Pendaftaran: ' . ($tournament['price'] == 0 ? 'Gratis' : 'Rp. ' . number_format($tournament['price'], 2, ',', '.'))) . '<br>
                             ' . htmlspecialchars('Pendaftaran dimulai: ' . $tournament['start_date']) . '<br>
                             ' . htmlspecialchars('Pendaftaran ditutup: ' . $tournament['end_date']) . '<br>
                             ' . htmlspecialchars('Max Slot: ' . $tournament['max_slot']) .   '<br>
