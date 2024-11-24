@@ -137,13 +137,17 @@ if (!$tournamentDetails) {
                         <div class="card-body">
                             <h3 class="card-title">Price</h3>
                             <p class="card-text">
-                                <?php 
+                            <?php 
                                 if (isset($tournamentDetails['price']) && is_numeric($tournamentDetails['price'])) {
-                                    echo 'Rp. ' . number_format($tournamentDetails['price'], 2, ',', '.');
+                                    if ($tournamentDetails['price'] == 0) {
+                                        echo 'Gratis';
+                                    } else {
+                                        echo 'Rp. ' . number_format($tournamentDetails['price'], 2, ',', '.');
+                                    }
                                 } else {
                                     echo 'No price details available';
                                 }
-                                ?>
+                            ?>
                             </p>
                         </div>
                     </div>
