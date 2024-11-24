@@ -25,8 +25,8 @@ if (!$tournamentDetails) {
             font-family: Arial, sans-serif;
         }
         .container {
-            max-width: 1200px;
-            margin: auto;
+            max-width: 900px;
+            margin-left: 200px;
             padding: 20px;
             border-radius: 10px;
             background-color: #222;
@@ -35,21 +35,24 @@ if (!$tournamentDetails) {
         h1, h3 {
             color: #029afe;
             font-weight: bold;
+            font-size: 1.5rem;
         }
         p {
             color: #eee;
-            margin-bottom: 15px;
-            line-height: 1.6;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            font-size: 0.9rem;
         }
         .btn-live {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 8px 15px;
             background-color: #029afe;
             color: #333;
             text-decoration: none;
             font-weight: bold;
             border-radius: 5px;
             transition: background-color 0.3s, transform 0.2s;
+            font-size: 0.9rem;
         }
         .btn-live:hover {
             background-color: #029afe;
@@ -74,19 +77,28 @@ if (!$tournamentDetails) {
             padding: 15px;
         }
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: bold;
             color: #029afe;
         }
         .card-text {
             color: #eee;
+            font-size: 0.9rem;
+        }
+       
+        .col-lg-4 {
+            flex: 1;
+        }
+        .col-lg-4.card-column {
+            padding-left: 30px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container main-content">
         <div class="row">
-            <div class="col-md-4">
+
+            <div class="col-lg-4">
                 <div class="card">
                     <img src="<?php echo htmlspecialchars($tournamentDetails['front_image']); ?>" 
                          alt="<?php echo htmlspecialchars($tournamentDetails['name']); ?>" 
@@ -99,9 +111,13 @@ if (!$tournamentDetails) {
                         <p><strong>Contact Person:</strong> <?php echo htmlspecialchars($tournamentDetails['contact_person']); ?></p>
                         <p><strong>Livestream URL:</strong> <?php echo htmlspecialchars($tournamentDetails['livestream']); ?></p>
                     </div>
+                    <div class="text-center">
+                        <a href="<?php echo htmlspecialchars($tournamentDetails['form_link']); ?>" class="btn btn-live w-100" role="button">Daftar untuk Turnamen</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-8">
+
+            <div class="col-lg-4">
                 <div class="list-group">
                     <div class="card">
                         <div class="card-body">
@@ -125,7 +141,7 @@ if (!$tournamentDetails) {
                                 if (isset($tournamentDetails['price']) && is_numeric($tournamentDetails['price'])) {
                                     echo 'Rp. ' . number_format($tournamentDetails['price'], 2, ',', '.');
                                 } else {
-                                    echo 'No prize details available';
+                                    echo 'No price details available';
                                 }
                                 ?>
                             </p>
@@ -137,15 +153,15 @@ if (!$tournamentDetails) {
                             <p class="card-text"><?php echo htmlspecialchars($tournamentDetails['max_slot']); ?></p>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title">Deskripsi</h3>
-                            <p class="card-text"><?php echo htmlspecialchars($tournamentDetails['description'] ?? 'No description available'); ?></p>
-                        </div>
-                    </div>
                 </div>
-                <div class="text-center">
-                    <a href="<?php echo htmlspecialchars($tournamentDetails['form_link']); ?>" class="btn btn-live w-100" role="button">Daftar untuk Turnamen</a>
+            </div>
+
+            <div class="col-lg-4 card-column">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Deskripsi</h3>
+                        <p class="card-text"><?php echo nl2br(htmlspecialchars($tournamentDetails['description'] ?? 'No description available')); ?></p>
+                    </div>
                 </div>
             </div>
         </div>

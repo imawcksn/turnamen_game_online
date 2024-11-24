@@ -3,110 +3,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/x-icon" href="../assets/images/OGT.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OGT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #000;
-            color: #029afe;
-        }
+    body {
+        background-color: #000;
+        color: #029afe;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
+    .container {
+        max-width: 20%;
+        margin: auto;
+        padding: 10px;
+    }
 
-        .categories-container {
-            overflow-x: auto;
-            white-space: nowrap;
-            margin-bottom: 20px;
-            padding: 10px 0;
-        }
+    .categories-container {
+        overflow-x: auto;
+        white-space: nowrap;
+        margin-bottom: 20px;
+        padding: 10px 0;
+    }
 
-        .category-item {
-            display: inline-block;
-            background-color: #151314;
-            color: #029afe;
-            padding: 10px 15px;
-            margin-right: 10px;
-            border-radius: 20px;
-            text-align: center;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    .category-item {
+        display: inline-block;
+        background-color: #151314;
+        color: #029afe;
+        padding: 8px 12px;
+        margin-right: 10px;
+        border-radius: 20px;
+        text-align: center;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
 
-        .category-item:hover {
-            background-color: #029afe;
-            color: #fff;
-        }
+    .category-item:hover {
+        background-color: #029afe;
+        color: #fff;
+    }
 
-        .category-item.active {
-            background-color: #029afe;
-            color: #fff;
-            font-weight: bold;
-        }
+    .category-item.active {
+        background-color: #029afe;
+        color: #fff;
+        font-weight: bold;
+    }
+    .banner {
+        width: 100%; 
+        max-width: 800px; 
+        overflow: hidden; 
+    }
 
+    .banner img {
+        width: 100%; 
+        height: auto; 
+        object-fit: cover; 
+    }
+
+    .card {
+        max-width: 800px; 
+        width: 100%; 
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: #151314;
+        border: none;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 10px;
+    }
+
+    .card img {
+        width: 35%;
+        max-width: 250px;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .card-body {
+        flex: 1;
+        padding: 10px;
+    }
+
+    .card-title {
+        color: #029afe;
+        font-size: 1.2rem;
+    }
+
+    .card-text {
+        color: #fff;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        background-color: #029afe;
+        border: none;
+        color: #333;
+    }
+
+    .btn-primary:hover {
+        background-color: #029afe;
+        color: #000;
+    }
+
+    a.btn.disabled {
+        pointer-events: none;
+        color: #fff;
+        opacity: 0.25;
+        background-color: #029afe;
+        cursor: not-allowed;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 1024px) {
         .card {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            background-color: #151314;
-            border: none;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            overflow: hidden;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .card img {
-            width: 40%;
-            max-width: 300px;
-            height: auto;
-            object-fit: cover;
-            border-radius: 10px;
+            width: 100%;
+            max-width: 100%;
         }
 
         .card-body {
-            flex: 1;
-            padding: 20px;
+            padding: 15px;
         }
 
         .card-title {
-            color: #029afe;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .category-item {
+            font-size: 10px;
+            padding: 6px 10px;
+        }
+
+        .card-title {
+            font-size: 1rem;
+        }
+
+        .card-body {
+            padding: 8px;
         }
 
         .card-text {
-            color: #fff;
-            margin-bottom: 10px;
+            font-size: 0.8rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .category-item {
+            font-size: 8px;
+            padding: 5px 8px;
         }
 
-        .btn-primary {
-            background-color: #029afe;
-            border: none;
-            color: #333;
+        .card-title {
+            font-size: 0.9rem;
         }
 
-        .btn-primary:hover {
-            background-color: #029afe;
-            color: #000;
+        .card-text {
+            font-size: 0.75rem;
         }
+    }
 
-        a.btn.disabled {
-            pointer-events: none;
-            color: #fff;
-            opacity: 0.25;
-            background-color: #029afe;
-            cursor: not-allowed;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-left mb-4">OGT Tournaments</h1>
+    <div class="main-content">
+        <h1 class="text-left mb-4">Tournaments</h1>
         <div class="banner">
         <img src="https://yamisok-publicdata.obs.ap-southeast-4.myhuaweicloud.com/yamisok-publicdata/tournament/61e05ce7be4bf.jpeg" alt="' . htmlspecialchars($tournament['name']) . '">
         </div>

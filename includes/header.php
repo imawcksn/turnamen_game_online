@@ -8,102 +8,113 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <style>
+.sidebar {
+    text-decoration: none;
+    transition: text-shadow 0.3s ease;
+    height: 100vh;
+    width: 120px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #151314;
+    padding-top: 20px;
+    color: #fff;
+}
 
-        .sidebar {
-            text-decoration: none;
-                transition: text-shadow 0.3s ease; 
-            height: 100vh;
-            width: 250px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #151314;
-            padding-top: 20px;
-            color: #fff;
-        }
+.sidebar a {
+    padding: 10px 15px;
+    display: block;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
 
-        .sidebar a {
-            padding: 10px 15px;
-            display: block;
-            font-weight: bold;
-            color: #fff;
-            text-decoration: none;
-        }
+.sidebar a:hover {
+    background-color: #495057;
+    text-shadow: 0 0 8px rgba(255, 255, 0, 0.8), 0 0 15px rgba(255, 255, 0, 0.8), 0 0 20px rgba(255, 255, 0, 1);
+    color: #029afe;
+}
 
-    
-        /* Glow effect di hover */
-        .sidebar a:hover {
-            background-color: #495057;
-            text-shadow: 0 0 8px rgba(255, 255, 0, 0.8), 0 0 15px rgba(255, 255, 0, 0.8), 0 0 20px rgba(255, 255, 0, 1);
-            color: #029afe;
-        }
+.sidebar a:active {
+    text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
+    color: #029afe;
+}
 
-        /* Glow effect ketika selected (active) */
-        .sidebar a:active {
-            text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
-            color: #029afe;
-        }
+.sidebar a.selected {
+    text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
+    color: #029afe;
+}
 
-        .sidebar a.selected {
-            text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
-            color: #029afe; 
-        }
+.main-content {
+    margin-left: 200px; /* Default margin */
+    padding: 20px;
+}
 
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-        }
+.sidebar-toggler {
+    display: none;
+}
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; 
+}
+@media (max-width: 768px) {
 
-        .sidebar-toggler {
-            display: none;
-        }
+    .sidebar {
+        width: 200px; 
+        transition: width 0.3s ease;
+    }
 
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 0;
-                overflow: hidden;
-            }
+    .main-content {
+        margin-left: 200px; 
+    }
 
-            .sidebar a {
-                text-align: center;
-            }
+    .sidebar a {
+        text-align: center;
+    }
 
-            .sidebar-toggler {
-                display: block;
-                position: absolute;
-                top: 10px;
-                left: 10px;
-                background-color: #007bff;
-                color: #fff;
-                border: none;
-                padding: 10px;
-                border-radius: 5px;
-                z-index: 1000;
-            }
+    .sidebar-toggler {
+        display: block;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 1000;
+    }
 
-            .main-content {
-                margin-left: 0;
-            }
+    .sidebar.active {
+        width: 250px;
+    }
 
-            .sidebar.active {
-                width: 250px;
-            }
-        }
+    .main-content.active {
+        margin-left: 0; 
+    }
+    .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; 
+}
+}
     </style>
 </head>
 
 <body>
-    <!-- untuk menghindari error headers already sent -->
     <?php if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 ; ?>
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <img src="/images/OGT.svg" alt="Home" width="36" height="36">
+        <div class="logo-container">
+            <img src="/images/OGT.svg" alt="Home" width="36" height="36">
+        </div>
         
         <a href="index.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/index.php') ? 'selected' : ''; ?>">Home</a>
-        <!-- Handle beda sidebar saat user role beda atau tidak ada user -->
         <?php if (isset($_SESSION['user'])): ?>
             <?php if ($_SESSION['user']['role'] == 'admin'): ?>
                 <a href="admin-dashboard.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/admin-dashboard.php') ? 'selected' : ''; ?>">Admin Dashboard</a>
@@ -118,10 +129,8 @@
         <?php endif; ?>
     </div>
 
-    <!-- Sidebar Toggler -->
     <button class="sidebar-toggler" onclick="toggleSidebar()">☰</button>
 
-    <!-- Modal utk Login / Register -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -139,7 +148,6 @@
                         </li>
                     </ul>
                     <div class="tab-content" id="authTabsContent">
-                        <!-- Login Form -->
                         <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
                             <form action="login-action.php" method="POST" class="mt-3">
                                 <div class="mb-3">
@@ -153,7 +161,6 @@
                                 <button type="submit" class="btn btn-primary w-100">Login</button>
                             </form>
                         </div>
-                        <!-- Register Form -->
                         <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
                             <form action="register-action.php" method="POST" class="mt-3">
                                 <div class="mb-3">

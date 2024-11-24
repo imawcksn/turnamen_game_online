@@ -37,7 +37,6 @@ $fields = [
     ],
 ];
 
-// cek if the table exists
 if (!isset($fields[$table])) {
     echo "<div class='alert alert-danger'>Unknown table: $table</div>";
     exit;
@@ -46,7 +45,6 @@ if (!isset($fields[$table])) {
 $tableFields = $fields[$table];
 $tournamentCategories = $table === 'tournaments' ? getTournamentCategories() : [];
 
-// Handle form submission
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = $_POST;
@@ -54,62 +52,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_FILES['front_image'])) {
         $fileTmpPath = $_FILES['front_image']['tmp_name'];
-        $fileName = uniqid() . '_' . basename($_FILES['front_image']['name']); //use uniqid biar gk bs duplicate nama file ny
+        $fileName = uniqid() . '_' . basename($_FILES['front_image']['name']);
         $fileSize = $_FILES['front_image']['size'];
-        $fileType = mime_content_type($fileTmpPath); //ambil file type
-        $allowedTypes = ['image/jpeg', 'image/png']; //allow images aja
-        $uploadDir = '../uploads/'; //masukin ke folder uploads
-    
-        // ambil url server kita, cek apabila https atau http
+        $fileType = mime_content_type($fileTmpPath);
+        $allowedTypes = ['image/jpeg', 'image/png'];
+        $uploadDir = '../uploads/';
         $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
     
-        // validasi file type dan file size
         if (!in_array($fileType, $allowedTypes)) {
             $errors[] = "Invalid file type for front image. Only JPG and PNG are allowed.";
-        } elseif ($fileSize > 2 * 1024 * 1024) { // Limit size to 2MB
+        } elseif ($fileSize > 2 * 1024 * 1024) {
             $errors[] = "File size for front image exceeds 2MB.";
         } else {
-            //jika directory atau folder bernama variable uploadDir tidak ada, create directory atau folder dengan permissions 0777 yang membolehkan create file di dalam folder tsb
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
 
-            //gabungkan tempat folder dengan nama file
             $uploadedFilePath = $uploadDir . $fileName;
 
-            //pindahkan file dari temporary folder ke folder yang diinginkan (upload)
             if (!move_uploaded_file($fileTmpPath, $uploadedFilePath)) {
-                $errors[] = "Failed to upload front image."; //return error apabila pemindahan gagal
+                $errors[] = "Failed to upload front image.";
             } else {
-
-                // save url fullnya apabila success
                 $data['front_image'] = $baseURL . '/uploads/' . $fileName;
             }
         }
     }
 
-    // validasi dan process apabila ada field yang belum di isi
     foreach ($tableFields as $field => $label) {
-        // skip front image karena nullable
         if ($field !== 'front_image' && (!isset($data[$field]) || trim($data[$field]) === '')) {
             $errors[] = "Field '$label' is required.";
         }
     }
 
-    // Save ke db apabila tidak ada error
     if (empty($errors)) {
-
-        //pisahkan masing masing data dari array
         $columns = implode(", ", array_keys($data));
         $placeholders = implode(", ", array_fill(0, count($data), "?"));
         $bindTypes = '';
     
-        // tentukan bind times (string atau int)
         foreach ($data as $field => $value) {
             $bindTypes .= in_array($field, ['price', 'max_slot', 'prize']) ? 'i' : 's';
         }
-    
-        // proses data di function editrecord
+
         if (editRecord($table, $columns, $placeholders, $bindTypes, $data)) {
             header("Location: admin-dashboard.php?table=$table");
             exit;
@@ -121,11 +104,83 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ob_flush();
 ?>
 
-<body style="background-color: #222; color: #029afe;">  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Record to <?= ucfirst($table) ?></title>
+    <style>
+        .mx-auto.mt-4 {
+            padding: 10px;
+            max-width: 400px;
+        }
+
+        input.form-control,
+        select.form-control {
+            padding: 6px;
+            font-size: 12px;
+            height: auto;
+        }
+
+        .form-label {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        button.btn.btn-primary {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+
+        .alert {
+            font-size: 14px;
+            padding: 8px;
+        }
+
+        body {
+            font-size: 14px;
+            background-color: #222;
+            color: #029afe;
+        }
+
+        h1 {
+            font-size: 18px;
+        }
+
+        input[type="text"], input[type="number"], input[type="date"], select {
+            height: 30px;
+            padding: 5px;
+            font-size: 12px;
+        }
+
+        input[type="file"] {
+            padding: 4px;
+            font-size: 12px;
+        }
+
+        table {
+            font-size: 12px;
+            padding: 5px;
+        }
+
+        table th, table td {
+            padding: 6px;
+        }
+
+        /* Styling for the textarea */
+        textarea.form-control {
+            padding: 8px;
+            font-size: 14px;
+            height: 100px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
 <div class="mx-auto mt-4">
     <h1>Add Record to <?= ucfirst($table) ?></h1>
-    
-    <!-- display errors  -->
+
     <?php if (!empty($errors)): ?>
         <div class="alert alert-danger">
             <?= implode('<br>', $errors) ?>
@@ -133,11 +188,10 @@ ob_flush();
     <?php endif; ?>
 
     <form method="POST" action="" enctype="multipart/form-data">
-        <!-- create form  -->
         <?php foreach ($tableFields as $field => $label): ?>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="<?= $field ?>" class="form-label"><?= $label ?></label>
-                <!-- jika field punya nya tournaments dan adalah category_id, ambil dari table table_categories dan bisa select -->
+                
                 <?php if ($field === 'category_id' && $table === 'tournaments'): ?>
                     <select class="form-control" id="<?= $field ?>" name="<?= $field ?>" required>
                         <option value="" disabled selected>Select a category</option>
@@ -145,11 +199,11 @@ ob_flush();
                             <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
                         <?php endforeach; ?>
                     </select>
-                        <!-- jika field nya si image, handle file type -->
+                <?php elseif ($field === 'description'): ?>
+                    <textarea class="form-control" id="<?= $field ?>" name="<?= $field ?>" placeholder="<?= $label ?>" required><?= $data['description'] ?? '' ?></textarea>
                 <?php elseif ($field === 'front_image'): ?>
                     <input type="file" class="form-control" id="<?= $field ?>" name="<?= $field ?>" accept="image/*">
                 <?php else: ?>
-                    <!-- jika field nya terima int, handle number, jika date handle date, selain itu text -->
                     <input 
                         type="<?= in_array($field, ['price', 'max_slot', 'prize']) ? 'number' : ($field === 'start_date' || $field === 'end_date' ? 'date' : 'text') ?>" 
                         class="form-control" 
@@ -158,7 +212,7 @@ ob_flush();
                         placeholder="<?= $label ?>" 
                         required>
                 <?php endif; ?>
-                
+
                 <div class="invalid-feedback">
                     Please provide a valid <?= strtolower($label) ?>.
                 </div>
@@ -169,4 +223,6 @@ ob_flush();
     </form>
 </div>
 </body>
+</html>
+
 <?php include('../includes/footer.php'); ?>

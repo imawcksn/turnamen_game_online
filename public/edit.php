@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowedTypes = ['image/jpeg', 'image/png'];
         $uploadDir = '../uploads/';
 
-
         $baseURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 
         if (!in_array($fileType, $allowedTypes)) {
@@ -119,6 +118,12 @@ ob_flush();
                     <?php if ($value): ?>
                         <img src="<?= htmlspecialchars($value) ?>" alt="Current Image" style="max-width: 100px; margin-top: 10px;">
                     <?php endif; ?>
+                <?php elseif ($field === 'description'): ?>
+                    <textarea 
+                        id="<?= $field ?>" 
+                        name="<?= $field ?>" 
+                        class="form-control" 
+                        rows="4"><?= htmlspecialchars($value) ?></textarea>
                 <?php else: ?>
                     <input 
                         type="text" 

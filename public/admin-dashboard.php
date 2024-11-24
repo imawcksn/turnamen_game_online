@@ -26,60 +26,89 @@ $data = getDataFromTable($currentTable);
             background-color: #333;
             color: #029afe;
             font-family: Arial, sans-serif;
+            font-size: 14px; 
         }
+
         .container {
-            max-width: 1400px;
-            margin: auto;
-            padding: 20px;
+            max-width: 1200px; 
+            margin-left: 150px; 
+            padding: 15px;
         }
-        .btn-secondary.active {
-            background-color: #029afe;
-            color: #fff;
+
+        h1 {
+            color: #029afe;
+            font-weight: bold;
+            font-size: 24px; 
         }
+
         .btn-primary {
             background-color: #029afe;
             border-color: #029afe;
             color: #fff;
             font-weight: bold;
+            font-size: 8px; 
+            padding: 6px 12px; 
         }
+
         .btn-primary:hover {
             background-color: #029afe;
             border-color: #029afe;
         }
+
         .btn-secondary {
             background-color: #fff;
             color: #029afe;
+            font-size: 8px; 
+            padding: 6px 12px; 
         }
+
         .btn-secondary:hover {
             background-color: #fff;
             color: #029afe;
         }
+
         .table {
             background-color: #222;
             color: #fff;
+            font-size: 8px; 
+            margin-bottom: 20px;
         }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 8px; 
+        }
+
         .table thead {
             background-color: #444;
         }
+
         .table tbody tr:hover {
             background-color: #555;
         }
-        h1 {
-            color: #029afe;
-            font-weight: bold;
+
+        .table .btn-sm {
+            font-size: 8px; 
+            padding: 4px 8px; 
         }
-        th, td {
-            text-align: center;
-            vertical-align: middle;
+
+        .d-flex {
+            margin-bottom: 15px; 
+        }
+
+        .d-flex a {
+            font-size: 8px; 
+            padding: 6px 10px; 
         }
     </style>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container">
     <h1 class="text-left mb-4">Admin Dashboard</h1>
 
     <!-- Buttons utk switch tables, jika table?=tournaments maka button tournaments nyala -->
-    <div class="d-flex justify-content-start mb-5">
+    <div class="d-flex justify-content-start mb-3">
         <a href="?table=tournaments" class="btn btn-secondary me-2 <?= $currentTable === 'tournaments' ? 'active' : '' ?>">Tournaments</a>
         <a href="?table=users" class="btn btn-secondary me-2 <?= $currentTable === 'users' ? 'active' : '' ?>">Users</a>
         <a href="?table=tournament_categories" class="btn btn-secondary me-2 <?= $currentTable === 'tournament_categories' ? 'active' : '' ?>">Games</a>
