@@ -2,16 +2,13 @@
 include('../includes/header.php');
 include('functions.php');
 
-// Check user role
 if ($_SESSION['user']['role'] !== 'admin') {
     header('Location: index.php');
     exit;
 }
-
-// Determine which table to fetch data from
+// ambil variabel dari url, misal table?=
 $currentTable = isset($_GET['table']) ? $_GET['table'] : 'tournaments';
 
-// Get data from the selected table
 $data = getDataFromTable($currentTable);
 ?>
 <!DOCTYPE html>
@@ -20,44 +17,46 @@ $data = getDataFromTable($currentTable);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- memakai campuran bootstrap dan custom css untuk fleksibilitas -->
+         
     <style>
         body {
             background-color: #333;
-            color: #f1c40f;
+            color: #029afe;
             font-family: Arial, sans-serif;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: auto;
             padding: 20px;
         }
         .btn-secondary.active {
-            background-color: #f1c40f !important;
-            color: #333 !important;
+            background-color: #029afe;
+            color: #fff;
         }
         .btn-primary {
-            background-color: #f1c40f;
-            border-color: #f1c40f;
-            color: #333;
+            background-color: #029afe;
+            border-color: #029afe;
+            color: #fff;
             font-weight: bold;
         }
         .btn-primary:hover {
-            background-color: #e1b707;
-            border-color: #e1b707;
+            background-color: #029afe;
+            border-color: #029afe;
         }
         .btn-secondary {
-            background-color: #444;
-            color: #f1c40f;
+            background-color: #fff;
+            color: #029afe;
         }
         .btn-secondary:hover {
-            background-color: #555;
-            color: #f1c40f;
+            background-color: #fff;
+            color: #029afe;
         }
         .table {
             background-color: #222;
-            color: #f1c40f;
+            color: #fff;
         }
         .table thead {
             background-color: #444;
@@ -66,7 +65,7 @@ $data = getDataFromTable($currentTable);
             background-color: #555;
         }
         h1 {
-            color: #f1c40f;
+            color: #029afe;
             font-weight: bold;
         }
         th, td {
@@ -77,21 +76,21 @@ $data = getDataFromTable($currentTable);
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Admin Dashboard</h1>
+    <h1 class="text-left mb-4">Admin Dashboard</h1>
 
-    <!-- Buttons to switch tables -->
-    <div class="d-flex justify-content-start mb-3">
+    <!-- Buttons utk switch tables, jika table?=tournaments maka button tournaments nyala -->
+    <div class="d-flex justify-content-start mb-5">
         <a href="?table=tournaments" class="btn btn-secondary me-2 <?= $currentTable === 'tournaments' ? 'active' : '' ?>">Tournaments</a>
         <a href="?table=users" class="btn btn-secondary me-2 <?= $currentTable === 'users' ? 'active' : '' ?>">Users</a>
         <a href="?table=tournament_categories" class="btn btn-secondary me-2 <?= $currentTable === 'tournament_categories' ? 'active' : '' ?>">Games</a>
     </div>
 
-    <!-- Add Data Button -->
-    <div class="d-flex justify-content-end mb-3">
+    <!-- Add Data Button sesuai table ygg di select -->
+    <div class="d-flex justify-content-start mb-3">
         <a href="add_data.php?table=<?= $currentTable ?>" class="btn btn-primary">Add <?= ucfirst($currentTable) ?></a>
     </div>
 
-    <!-- Table Display -->
+    <!-- Table Display sesuai table yg di select -->
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -106,19 +105,25 @@ $data = getDataFromTable($currentTable);
             </tr>
         </thead>
         <tbody>
+        <!-- Get data dari table yg di select dan show di sini -->
+        <!--Check apakah data tidak kosong -->
             <?php if ($data->num_rows > 0): ?>
+                <!-- ambil data -->
                 <?php while ($row = $data->fetch_assoc()): ?>
                     <tr>
+                        <!-- setiap row, create table content-->
                         <?php foreach ($row as $value): ?>
                             <td><?= htmlspecialchars($value) ?></td>
                         <?php endforeach; ?>
                         <td>
+                            <!-- action button sesuai row yang ditekan dan table yg dipilih -->
                             <a href="edit.php?table=<?= $currentTable ?>&id=<?= $row['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
                             <a href="delete.php?table=<?= $currentTable ?>&id=<?= $row['id'] ?>" class="btn btn-sm btn-danger">Delete</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
             <?php else: ?>
+            <!--bila data kosong, show ini -->
                 <tr>
                     <td colspan="3">No records found in <?= htmlspecialchars($currentTable) ?></td>
                 </tr>
