@@ -8,10 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Arial', sans-serif;
-        }
 
         .sidebar {
             text-decoration: none;
@@ -21,7 +17,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #343a40;
+            background-color: #151314;
             padding-top: 20px;
             color: #fff;
         }
@@ -35,22 +31,22 @@
         }
 
     
-        /* Glow effect on hover */
+        /* Glow effect di hover */
         .sidebar a:hover {
             background-color: #495057;
             text-shadow: 0 0 8px rgba(255, 255, 0, 0.8), 0 0 15px rgba(255, 255, 0, 0.8), 0 0 20px rgba(255, 255, 0, 1);
-            color: #e1b308;
+            color: #029afe;
         }
 
-        /* Glow effect when selected (active) */
+        /* Glow effect ketika selected (active) */
         .sidebar a:active {
             text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
-            color: #e1b308;
+            color: #029afe;
         }
 
         .sidebar a.selected {
             text-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 18px rgba(255, 255, 0, 1), 0 0 25px rgba(255, 255, 0, 1);
-            color: #e1b308; /* Highlight selected link in yellow */
+            color: #029afe; 
         }
 
         .main-content {
@@ -97,14 +93,17 @@
 </head>
 
 <body>
-    <?php session_start(); ?>
-
+    <!-- untuk menghindari error headers already sent -->
+    <?php if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+; ?>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <img src="/images/OGT.svg" alt="Home" width="36" height="36">
         
         <a href="index.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/index.php') ? 'selected' : ''; ?>">Home</a>
-        
+        <!-- Handle beda sidebar saat user role beda atau tidak ada user -->
         <?php if (isset($_SESSION['user'])): ?>
             <?php if ($_SESSION['user']['role'] == 'admin'): ?>
                 <a href="admin-dashboard.php" class="<?php echo ($_SERVER['PHP_SELF'] == '/admin-dashboard.php') ? 'selected' : ''; ?>">Admin Dashboard</a>
@@ -122,17 +121,7 @@
     <!-- Sidebar Toggler -->
     <button class="sidebar-toggler" onclick="toggleSidebar()">☰</button>
 
-    <!-- Main Content -->
-    <?php if (($_SERVER['PHP_SELF'] == '/index.php') && (isset($_SESSION['user']['username']))): ?>
-        <div class="main-content">
-            <h1>Welcome to Online Game Tournament, <?php  echo $_SESSION['user']['username']; ?>!</h1>
-            <p>Enjoy your killing spree</p>
-        </div>
-    <?php endif; ?>
-
-
-
-    <!-- Modal for Login / Register -->
+    <!-- Modal utk Login / Register -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
